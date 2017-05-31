@@ -6,7 +6,6 @@ import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.ModMetadata;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import thelm.jaopca.api.JAOPCAApi;
 
 @Mod(
 		modid = JAOPCASingularities.MOD_ID,
@@ -16,7 +15,7 @@ import thelm.jaopca.api.JAOPCAApi;
 		)
 public class JAOPCASingularities {
 	public static final String MOD_ID = "jaopcasingularities";
-	public static final String VERSION = "1.10.2-1.0.0";
+	public static final String VERSION = "1.10.2-1.0.1";
 	@Instance(JAOPCASingularities.MOD_ID)
 	public static JAOPCASingularities core;
 	@SidedProxy(serverSide="thelm.jaopcasingularities.CommonProxy",clientSide="thelm.jaopcasingularities.ClientProxy")
@@ -33,7 +32,7 @@ public class JAOPCASingularities {
 		metadata.credits = "Idea taken from AOBD Singularities by RCXCrafter";
 		metadata.authorList.add("TheLMiffy1111");
 		metadata.description = "A mod that aims to add singularities for more ores to avaritia.";
-		
-		JAOPCAApi.registerModule(new ModuleAvaritia());
+
+		ModuleAvaritia.register();
 	}
 }

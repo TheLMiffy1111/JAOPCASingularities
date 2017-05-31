@@ -15,7 +15,7 @@ repositories {
     }
 }
 
-version = "1.10.2-1.0.0"
+version = "1.10.2-1.0.1"
 group= "thelm.jaopcasingularities"
 archivesBaseName = "JAOPCASingularities"
 

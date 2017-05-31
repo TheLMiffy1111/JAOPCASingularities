@@ -30,7 +30,7 @@ public class ModuleAvaritia extends ModuleBase {
 	public static final ItemEntry SINGULARITY_ENTRY = new ItemEntry(EnumEntryType.ITEM, "singularity", new ModelResourceLocation("jaopcasingularities:singularity#inventory"), ImmutableList.of(
 			"Iron", "Gold", "Copper", "Tin", "Lead", "Silver", "Nickel"
 			)).setItemProperties(SINGULARITY_PROPERTIES);
-	
+
 	@Override
 	public String getName() {
 		return "avaritia";
@@ -47,24 +47,25 @@ public class ModuleAvaritia extends ModuleBase {
 	}
 
 	@Override
-	public void preInit() {
-		MinecraftForge.EVENT_BUS.register(this);
-	}
-
-	@Override
 	public void init() {
 		JAOPCASingularities.proxy.overrideColors();
-		
+
 		for(IOreEntry entry : JAOPCAApi.ENTRY_NAME_TO_ORES_MAP.get("singularity")) {
 			CompressorManager.addOreRecipe(Utils.getOreStack("singularity", entry, 1), energyIReciprocal(entry, 300), "block"+entry.getOreName());
 			Recipes.catalyst.getInput().add(Utils.getOreStack("singularity", entry, 1));
 		}
 	}
-	
+
 	public static int energyIReciprocal(IOreEntry entry, double energy) {
 		return (int)((1/entry.getEnergyModifier())*energy);
 	}
-	
+
+	public static void register() {
+		ModuleAvaritia mod = new ModuleAvaritia();
+		JAOPCAApi.registerModule(mod);
+		MinecraftForge.EVENT_BUS.register(mod);
+	}
+
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
 	public void onModelBake(ModelBakeEvent event) {
