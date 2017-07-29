@@ -11,11 +11,11 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 		modid = JAOPCASingularities.MOD_ID,
 		name = "JAOPCASingularities",
 		version = JAOPCASingularities.VERSION,
-		dependencies = "required-after:avaritia;required-before:jaopca@[1.10.2-1.0.10,)"
+		dependencies = "required-after:avaritia;required-before:jaopca@[1.11.2-1.1.12,)"
 		)
 public class JAOPCASingularities {
 	public static final String MOD_ID = "jaopcasingularities";
-	public static final String VERSION = "1.10.2-1.0.1";
+	public static final String VERSION = "1.11.2-1.1.2";
 	@Instance(JAOPCASingularities.MOD_ID)
 	public static JAOPCASingularities core;
 	@SidedProxy(serverSide="thelm.jaopcasingularities.CommonProxy",clientSide="thelm.jaopcasingularities.ClientProxy")
