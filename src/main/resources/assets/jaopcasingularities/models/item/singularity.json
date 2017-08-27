@@ -1,7 +1,0 @@
-{
-    "parent": "item/generated",
-    "textures": {
-        "layer0": "jaopcasingularities:items/singularity",
-        "layer1": "jaopcasingularities:items/singularity_overlay"
-    }
-}

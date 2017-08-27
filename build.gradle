@@ -11,12 +11,48 @@ apply plugin: 'net.minecraftforge.gradle.forge'
 
 repositories {
     maven {
+        url = "http://maven.blamejared.com"
+    }
+    maven {
+        url = "http://dvs1.progwml6.com/files/maven"
+    }
+    maven {
+        url = "http://tehnut.info/maven"
+    }
+    maven {
+        url = "http://maven.amadornes.com/"
+    }
+    maven {
+        url = "http://maven.ic2.player.to/"
+    }
+    maven {
+        url = "http://maven.tterrag.com/"
+    }
+    ivy {
+        url "http://ae-mod.info/builds"
+        layout "pattern", {
+            artifact "[module]-[revision](-[classifier])(.[ext])"
+        }
+    }
+    maven {
+        url = "http://maven.epoxide.org/"
+    }
+    maven {
+        url = "https://maven.chaosfield.at/"
+    }
+    maven {
+        url = "http://maven.modmuss50.me/"
+    }
+    maven {
         url = "http://chickenbones.net/maven/"
+    }
+    maven {
+        url = "http://maven.covers1624.net/"
     }
 }
 
-version = "1.10.2-1.0.1"
-group= "thelm.jaopcasingularities"
+version = "1.10.2-2.0.0.3"
+group= "thelm.jaopca.singularities"
 archivesBaseName = "JAOPCASingularities"
 
 sourceCompatibility = targetCompatibility = "1.8"
@@ -32,7 +68,21 @@ minecraft {
 }
 
 dependencies {
-    deobfCompile "codechicken:CodeChickenLib:1.10.2-2.5.8.255:universal"
+    deobfCompile "MCMultiPart:MCMultiPart-experimental:1.4.0_93:universal"
+    deobfCompile "mezz.jei:jei_1.10.2:3.14.7.417"
+    deobfCompile "slimeknights.mantle:Mantle:1.10.2-1.1.5.205"
+    deobfCompile "slimeknights:TConstruct:1.10.2-2.6.3.501"
+    deobfCompile "net.industrial-craft:industrialcraft-2:2.6.204-ex110"
+    deobfCompile "codechicken:CodeChickenLib:1.10.2-2.5.9.283:universal"
+    deobfCompile("cofh:CoFHCore:1.10.2-4.1.11.16:universal") {
+        transitive = false
+    }
+    deobfCompile("cofh:ThermalFoundation:1.10.2-2.1.5.12:universal") {
+        transitive = false
+    }
+    deobfCompile("cofh:ThermalExpansion:1.10.2-5.1.9.24:universal") {
+        transitive = false
+    }
 }
 
 processResources
