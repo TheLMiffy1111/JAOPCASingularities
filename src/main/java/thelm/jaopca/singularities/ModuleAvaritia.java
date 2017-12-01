@@ -1,11 +1,9 @@
 package thelm.jaopca.singularities;
 
-import java.util.HashMap;
 import java.util.List;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 
 import codechicken.lib.util.TransformUtils;
 import morph.avaritia.client.render.item.HaloRenderItem;
@@ -15,7 +13,6 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.EnumRarity;
 import net.minecraftforge.client.event.ModelBakeEvent;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -33,10 +30,8 @@ public class ModuleAvaritia extends ModuleBase {
 	public static final ItemProperties SINGULARITY_PROPERTIES = new ItemProperties().setRarity(EnumRarity.UNCOMMON).setItemClass(ItemSingularityBase.class);
 	public static final ItemEntry SINGULARITY_ENTRY = new ItemEntry(EnumEntryType.ITEM, "singularity", new ModelResourceLocation("jaopca:singularity#inventory"), ImmutableList.of(
 			"Iron", "Gold", "Copper", "Tin", "Lead", "Silver", "Nickel", "Lapis", "Quartz", "Diamond", "Emerald", "Redstone", "Infinity"
-			)).setItemProperties(SINGULARITY_PROPERTIES).
+			)).setProperties(SINGULARITY_PROPERTIES).
 			setOreTypes(EnumOreType.values());
-
-	public static final HashMap<String,Integer> AMOUNTS = Maps.<String,Integer>newHashMap();
 
 	@Override
 	public String getName() {
@@ -54,24 +49,13 @@ public class ModuleAvaritia extends ModuleBase {
 	}
 
 	@Override
-	public void registerConfigs(Configuration config) {
-		for(IOreEntry entry : JAOPCAApi.ENTRY_NAME_TO_ORES_MAP.get("singularity")) {
-			AMOUNTS.put(entry.getOreName(), config.get(Utils.to_under_score(entry.getOreName()), "singularityAmount", energyIReciprocal(entry, 300)).setRequiresMcRestart(true).getInt());
-		}
-	}
-
-	@Override
 	public void init() {
 		JAOPCASingularities.proxy.overrideColors();
 
 		for(IOreEntry entry : JAOPCAApi.ENTRY_NAME_TO_ORES_MAP.get("singularity")) {
-			CompressorManager.addOreRecipe(Utils.getOreStack("singularity", entry, 1), energyIReciprocal(entry, 300), "block"+entry.getOreName());
+			CompressorManager.addOreRecipe(Utils.getOreStack("singularity", entry, 1), Utils.rarityReciprocalI(entry, 300), "block"+entry.getOreName());
 			Recipes.catalyst.getInput().add(Utils.getOreStack("singularity", entry, 1));
 		}
-	}
-
-	public static int energyIReciprocal(IOreEntry entry, double energy) {
-		return (int)((1/entry.getEnergyModifier())*energy);
 	}
 
 	public static void register() {
