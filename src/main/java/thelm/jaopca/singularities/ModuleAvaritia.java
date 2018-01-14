@@ -2,13 +2,14 @@ package thelm.jaopca.singularities;
 
 import java.lang.reflect.Field;
 import java.util.List;
+import java.util.Optional;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 
 import codechicken.lib.util.TransformUtils;
-import ic2.api.recipe.Recipes;
 import morph.avaritia.client.render.item.HaloRenderItem;
+import morph.avaritia.init.ModItems;
 import morph.avaritia.recipe.AvaritiaRecipeManager;
 import morph.avaritia.recipe.compressor.CompressorRecipe;
 import morph.avaritia.recipe.compressor.ICompressorRecipe;
@@ -19,7 +20,6 @@ import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelBakeEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.crafting.CraftingHelper;
@@ -39,7 +39,7 @@ public class ModuleAvaritia extends ModuleBase {
 
 	public static final ItemProperties SINGULARITY_PROPERTIES = new ItemProperties().setRarity(EnumRarity.UNCOMMON).setItemClass(ItemSingularityBase.class);
 	public static final ItemEntry SINGULARITY_ENTRY = new ItemEntry(EnumEntryType.ITEM, "singularity", new ModelResourceLocation("jaopca:singularity#inventory"), ImmutableList.of(
-			"Iron", "Gold", "Copper", "Tin", "Lead", "Silver", "Nickel", "Lapis", "Quartz", "Diamond", "Emerald", "Redstone", "ElectrumFlux", "Enderium", "Steel", "DarkSteel", "Infinity"
+			"Iron", "Gold", "Copper", "Tin", "Lead", "Silver", "Nickel", "Lapis", "Quartz", "Diamond", "Emerald", "Redstone", "ElectrumFlux", "Platinum", "Iridium", "Infinity"
 			)).setProperties(SINGULARITY_PROPERTIES).
 			setOreTypes(EnumOreType.values());
 
@@ -92,10 +92,11 @@ public class ModuleAvaritia extends ModuleBase {
 	}
 
 	public static void addCatalystIngredient(Object input) {
-		IExtremeRecipe rec = AvaritiaRecipeManager.EXTREME_RECIPES.get(new ResourceLocation("avaritia", "items/infinity_catalyst"));
-		if(rec == null) {
-			throw new RuntimeException("Something went wrong with Avaritia's Infinity Catalyst recipe. The class type of it is null");
+		Optional<IExtremeRecipe> recOp = AvaritiaRecipeManager.EXTREME_RECIPES.values().stream().filter(recipe->recipe.getRecipeOutput().isItemEqual(ModItems.infinity_catalyst)).findAny();
+		if(!recOp.isPresent()) {
+			JAOPCAApi.LOGGER.warn("Avaritia's Infinity Catalyst recipe is not present.");
 		}
+		IExtremeRecipe rec = recOp.get();
 		if(rec instanceof ExtremeShapelessRecipe) {
 			try {
 				ExtremeShapelessRecipe recipe = (ExtremeShapelessRecipe)rec;
@@ -103,12 +104,13 @@ public class ModuleAvaritia extends ModuleBase {
 				inputField.setAccessible(true);
 				NonNullList<Ingredient> list = (NonNullList<Ingredient>)inputField.get(recipe);
 				list.add(CraftingHelper.getIngredient(input));
-				return;
 			}
 			catch(NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
-				throw new RuntimeException("Something went wrong with Avaritia's Infinity Catalyst recipe.", e);
+				new RuntimeException("Something went wrong with Avaritia's Infinity Catalyst recipe.", e).printStackTrace();
 			}
 		}
-		throw new RuntimeException("Something went wrong with Avaritia's Infinity Catalyst recipe. The class type of it is "+rec.getClass().getName());
+		else {
+			JAOPCAApi.LOGGER.warn("Avaritia's Infinity Catalyst recipe is not of type ExtremeShapelessRecipe.");
+		}
 	}
 }
