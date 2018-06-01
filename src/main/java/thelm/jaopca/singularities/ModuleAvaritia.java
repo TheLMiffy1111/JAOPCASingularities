@@ -95,6 +95,7 @@ public class ModuleAvaritia extends ModuleBase {
 		Optional<IExtremeRecipe> recOp = AvaritiaRecipeManager.EXTREME_RECIPES.values().stream().filter(recipe->recipe.getRecipeOutput().isItemEqual(ModItems.infinity_catalyst)).findAny();
 		if(!recOp.isPresent()) {
 			JAOPCAApi.LOGGER.warn("Avaritia's Infinity Catalyst recipe is not present.");
+			return;
 		}
 		IExtremeRecipe rec = recOp.get();
 		if(rec instanceof ExtremeShapelessRecipe) {
