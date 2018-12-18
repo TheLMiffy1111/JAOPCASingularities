@@ -2,14 +2,12 @@ package thelm.jaopca.singularities;
 
 import java.lang.reflect.Field;
 import java.util.List;
-import java.util.Optional;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 
 import codechicken.lib.util.TransformUtils;
 import morph.avaritia.client.render.item.HaloRenderItem;
-import morph.avaritia.init.ModItems;
 import morph.avaritia.recipe.AvaritiaRecipeManager;
 import morph.avaritia.recipe.compressor.CompressorRecipe;
 import morph.avaritia.recipe.compressor.ICompressorRecipe;
@@ -20,8 +18,10 @@ import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelBakeEvent;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
@@ -37,11 +37,15 @@ import thelm.jaopca.api.utils.Utils;
 
 public class ModuleAvaritia extends ModuleBase {
 
+	public static final ResourceLocation CATALYST_RECIPE_LOCATION = new ResourceLocation("avaritia:items/infinity_catalyst");
+
 	public static final ItemProperties SINGULARITY_PROPERTIES = new ItemProperties().setRarity(EnumRarity.UNCOMMON).setItemClass(ItemSingularityBase.class);
 	public static final ItemEntry SINGULARITY_ENTRY = new ItemEntry(EnumEntryType.ITEM, "singularity", new ModelResourceLocation("jaopca:singularity#inventory"), ImmutableList.of(
 			"Iron", "Gold", "Copper", "Tin", "Lead", "Silver", "Nickel", "Lapis", "Quartz", "Diamond", "Emerald", "Redstone", "ElectrumFlux", "Platinum", "Iridium", "Infinity"
 			)).setProperties(SINGULARITY_PROPERTIES).
 			setOreTypes(EnumOreType.values());
+
+	public static boolean addToCatalystRecipe = true;
 
 	@Override
 	public String getName() {
@@ -56,6 +60,11 @@ public class ModuleAvaritia extends ModuleBase {
 	@Override
 	public List<ItemEntry> getItemRequests() {
 		return Lists.<ItemEntry>newArrayList(SINGULARITY_ENTRY);
+	}
+
+	@Override
+	public void registerConfigs(Configuration config) {
+		addToCatalystRecipe = config.get("jaopcasingularities", "addToCatalystRecipe", true, "Should JAOPCASingularities add to the Infinity Catalyst recipe.").setRequiresMcRestart(true).getBoolean();
 	}
 
 	@Override
@@ -92,11 +101,14 @@ public class ModuleAvaritia extends ModuleBase {
 	}
 
 	public static void addCatalystIngredient(Object input) {
-		Optional<IExtremeRecipe> recOp = AvaritiaRecipeManager.EXTREME_RECIPES.values().stream().filter(recipe->recipe.getRecipeOutput().isItemEqual(ModItems.infinity_catalyst)).findAny();
-		if(!recOp.isPresent()) {
-			JAOPCAApi.LOGGER.warn("Avaritia's Infinity Catalyst recipe is not present.");
+		if(!addToCatalystRecipe) {
+			return;
 		}
-		IExtremeRecipe rec = recOp.get();
+		IExtremeRecipe rec = AvaritiaRecipeManager.EXTREME_RECIPES.get(CATALYST_RECIPE_LOCATION);
+		if(rec == null) {
+			JAOPCAApi.LOGGER.warn("Avaritia's Infinity Catalyst recipe is not present.");
+			return;
+		}
 		if(rec instanceof ExtremeShapelessRecipe) {
 			try {
 				ExtremeShapelessRecipe recipe = (ExtremeShapelessRecipe)rec;
