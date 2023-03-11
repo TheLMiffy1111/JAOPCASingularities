@@ -2,35 +2,24 @@ package thelm.jaopca.singularities.compat.avaritia;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
-import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSetMultimap;
 import com.google.common.collect.Multimap;
 
-import codechicken.lib.util.TransformUtils;
-import morph.avaritia.client.render.item.HaloRenderItem;
-import net.minecraft.client.renderer.block.model.IBakedModel;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.util.registry.IRegistry;
-import net.minecraftforge.client.event.ModelBakeEvent;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import cpw.mods.fml.common.Loader;
+import cpw.mods.fml.common.event.FMLInitializationEvent;
 import thelm.jaopca.api.JAOPCAApi;
 import thelm.jaopca.api.config.IDynamicSpecConfig;
 import thelm.jaopca.api.forms.IForm;
 import thelm.jaopca.api.forms.IFormRequest;
 import thelm.jaopca.api.helpers.IMiscHelper;
-import thelm.jaopca.api.items.IItemFormSettings;
 import thelm.jaopca.api.items.IItemFormType;
 import thelm.jaopca.api.items.IItemInfo;
-import thelm.jaopca.api.items.IItemModelFunctionCreator;
 import thelm.jaopca.api.materials.IMaterial;
 import thelm.jaopca.api.materials.MaterialType;
 import thelm.jaopca.api.modules.IModule;
@@ -40,22 +29,70 @@ import thelm.jaopca.items.ItemFormType;
 import thelm.jaopca.utils.ApiImpl;
 import thelm.jaopca.utils.MiscHelper;
 
-@JAOPCAModule(modDependencies = "avaritia")
+@JAOPCAModule(modDependencies = "Avaritia")
 public class AvaritiaModule implements IModule {
 
 	public static final Set<String> BLACKLIST = new TreeSet<>(Arrays.asList(
-			"Copper", "Diamond", "ElectrumFlux", "Emerald", "Gold", "Infinity", "Iridium", "Iron", "Lapis",
-			"Lead", "Neutronium", "Nickel", "Platinum", "Quartz", "Redstone", "Silver", "Tin"));
+			"Clay", "Copper", "Gold", "Infinity", "Iron", "Lapis", "Lead", "Neutronium", "Nickel", "Quartz",
+			"Redstone", "Silver", "Tin"));
+
+	static {
+		if(Loader.isModLoaded("thermsingul")) {
+			Collections.addAll(BLACKLIST, "Enderium", "Lumium", "Mithril", "Platinum", "Signalum");
+		}
+		if(Loader.isModLoaded("universalsingularities")) {
+			Collections.addAll(BLACKLIST, "Aluminium", "Aluminum", "Brass", "Bronze", "Charcoal", "Coal", "Diamond",
+					"Electrum", "Emerald", "Invar", "Magnesium", "Osmium", "Peridot", "Ruby", "Sapphire", "Steel",
+					"Titanium", "Tungsten", "Uranium", "Zinc");
+			if(Loader.isModLoaded("bigReactors")) {
+				Collections.addAll(BLACKLIST, "Blutonium", "Cyanite", "Graphite", "Ludicrite", "Yellorium");
+			}
+			if(Loader.isModLoaded("draconicEvolution")) {
+				Collections.addAll(BLACKLIST, "Draconium", "DraconiumAwakened");
+			}
+			if(Loader.isModLoaded("enderIO")) {
+				Collections.addAll(BLACKLIST, "ConductiveIron", "DarkSteel", "ElectricalSteel", "EnergeticAlloy",
+						"PulsatingIron", "RedstoneAlloy", "Soularium", "VibrantAlloy");
+			}
+			if(Loader.isModLoaded("extraPlanets")) {
+				Collections.addAll(BLACKLIST, "BlueGem", "Carbon", "Crystal", "Palladium", "RedGem", "WhiteGem");
+			}
+			if(Loader.isModLoaded("extraTiC")) {
+				Collections.addAll(BLACKLIST, "Fairy", "Pokefennium");
+			}
+			if(Loader.isModLoaded("extraUtilities")) {
+				Collections.addAll(BLACKLIST, "Unstable");
+			}
+			if(Loader.isModLoaded("mekanism")) {
+				Collections.addAll(BLACKLIST, "RefinedGlowstone", "RefinedObsidian");
+			}
+			if(Loader.isModLoaded("metallurgy")) {
+				Collections.addAll(BLACKLIST, "Amordrine", "Angmallen", "Bitumen", "BlackSteel", "Celenegil",
+						"DamascusSteel", "Desichalkos", "Haderoth", "Hepatizon", "Inolashite", "Phosphorus",
+						"Potash", "Quicksilver", "Saltpeter", "ShadowSteel", "Sulfur", "Tartarite");
+			}
+			if(Loader.isModLoaded("pneumaticCraft")) {
+				Collections.addAll(BLACKLIST, "IronCompressed");
+			}
+			if(Loader.isModLoaded("projectRed")) {
+				Collections.addAll(BLACKLIST, "Electrotine");
+			}
+			if(Loader.isModLoaded("redstoneArsenal")) {
+				Collections.addAll(BLACKLIST, "CrystalFlux");
+				Collections.addAll(BLACKLIST, "ElectrumFlux");
+			}
+			if(Loader.isModLoaded("tinkersConstruct")) {
+				Collections.addAll(BLACKLIST, "AluminiumBrass", "AluminumBrass", "Alumite", "Ardite", "Cobalt",
+						"Ender", "Glue", "Manyullyn");
+			}
+		}
+	}
 
 	private final IForm singularityForm = ApiImpl.INSTANCE.newForm(this, "avaritia_singularity", ItemFormType.INSTANCE).
 			setMaterialTypes(MaterialType.values()).setSecondaryName("singularity").setDefaultMaterialBlacklist(BLACKLIST).
 			setSettings(ItemFormType.INSTANCE.getNewSettings().setItemCreator(JAOPCASingularityItem::new));
 
 	private Map<IMaterial, IDynamicSpecConfig> configs;
-
-	public AvaritiaModule() {
-		MinecraftForge.EVENT_BUS.register(this);
-	}
 
 	@Override
 	public String getName() {
@@ -72,6 +109,16 @@ public class AvaritiaModule implements IModule {
 	@Override
 	public List<IFormRequest> getFormRequests() {
 		return Collections.singletonList(singularityForm.toRequest());
+	}
+
+	@Override
+	public Set<MaterialType> getMaterialTypes() {
+		return EnumSet.allOf(MaterialType.class);
+	}
+
+	@Override
+	public Set<String> getDefaultMaterialBlacklist() {
+		return BLACKLIST;
 	}
 
 	@Override
@@ -101,31 +148,6 @@ public class AvaritiaModule implements IModule {
 						miscHelper.getRecipeKey("avaritia.singularity_in_catalyst", material.getName()),
 						singularityInfo);
 			}
-		}
-	}
-
-	@Override
-	public Map<String, String> getLegacyRemaps() {
-		ImmutableMap.Builder builder = ImmutableMap.builder();
-		builder.put("singularity", "avaritia_singularity");
-		return builder.build();
-	}
-
-	@SideOnly(Side.CLIENT)
-	@SubscribeEvent
-	public void onModelBake(ModelBakeEvent event) {
-		Set<ModelResourceLocation> locations = new TreeSet<>();
-		IItemFormType itemFormType = ItemFormType.INSTANCE;
-		IItemFormSettings settings = (IItemFormSettings)singularityForm.getSettings();
-		IItemModelFunctionCreator modelFuncCreator = settings.getItemModelFunctionCreator();
-		for(IMaterial material : singularityForm.getMaterials()) {
-			IItemInfo singularityInfo = itemFormType.getMaterialFormInfo(singularityForm, material);
-			locations.addAll(modelFuncCreator.create(singularityInfo.getMaterialFormItem(), settings).getRight());
-		}
-		IRegistry<ModelResourceLocation, IBakedModel> registry = event.getModelRegistry();
-		for(ModelResourceLocation location : locations) {
-			HaloRenderItem wrappedModel = new HaloRenderItem(TransformUtils.DEFAULT_ITEM, registry.getObject(location));
-			registry.putObject(location, wrappedModel);
 		}
 	}
 }
