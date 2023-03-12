@@ -25,8 +25,8 @@ public class CatalystIngredientRecipeAction implements IRecipeAction {
 
 	@Override
 	public boolean register() {
-		List<ItemStack> ing = MiscHelper.INSTANCE.getItemStacks(input, 1, true);
-		if(ing.isEmpty()) {
+		ItemStack ing = MiscHelper.INSTANCE.getItemStack(input, 1, true);
+		if(ing == null) {
 			throw new IllegalArgumentException("Empty ingredient in recipe "+key+": "+input);
 		}
 		return Grinder.catalyst.getInput().add(ing);
