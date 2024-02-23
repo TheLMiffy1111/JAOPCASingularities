@@ -1,4 +1,4 @@
-package thelm.jaopca.singularities.compat.avaritia;
+package thelm.jaopca.singularities.compat.avaritia.items;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -7,10 +7,12 @@ import fox.spiteful.avaritia.items.LudicrousItems;
 import fox.spiteful.avaritia.render.IHaloRenderItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
+import net.minecraftforge.client.IItemRenderer;
 import thelm.jaopca.api.forms.IForm;
 import thelm.jaopca.api.items.IItemFormSettings;
 import thelm.jaopca.api.materials.IMaterial;
 import thelm.jaopca.items.JAOPCAItem;
+import thelm.jaopca.singularities.compat.avaritia.client.renderer.JAOPCAHaloItemRenderer;
 
 public class JAOPCASingularityItem extends JAOPCAItem implements IHaloRenderItem {
 
@@ -18,32 +20,38 @@ public class JAOPCASingularityItem extends JAOPCAItem implements IHaloRenderItem
 		super(form, material, settings);
 	}
 
-	@Override
 	@SideOnly(Side.CLIENT)
+	@Override
+	public IItemRenderer getRenderer() {
+		return JAOPCAHaloItemRenderer.INSTANCE;
+	}
+
+	@SideOnly(Side.CLIENT)
+	@Override
 	public boolean drawHalo(ItemStack stack) {
 		return true;
 	}
 
-	@Override
 	@SideOnly(Side.CLIENT)
+	@Override
 	public IIcon getHaloTexture(ItemStack stack) {
 		return ((ItemResource)LudicrousItems.resource).halo[0];
 	}
 
-	@Override
 	@SideOnly(Side.CLIENT)
+	@Override
 	public int getHaloSize(ItemStack stack) {
 		return 4;
 	}
 
-	@Override
 	@SideOnly(Side.CLIENT)
+	@Override
 	public boolean drawPulseEffect(ItemStack stack) {
 		return false;
 	}
 
-	@Override
 	@SideOnly(Side.CLIENT)
+	@Override
 	public int getHaloColour(ItemStack stack) {
 		return 0xFF000000;
 	}

@@ -1,0 +1,12 @@
+[
+	{
+		"modid": "jaopcasingularities",
+		"version": "0@VERSION@",
+		"name": "JAOPCASingularities",
+		"description": "An addon to JAOPCA that helps add singularities for more materials to Avaritia.",
+		"logoFile": "jaopcasingularities.logo.png",
+		"credits": "Inspired by AOBD Singularities, a mod by RCXCrafter",
+		"authorList": ["TheLMiffy1111"],
+		"url": "https://www.curseforge.com/minecraft/mc-mods/jaopcasingularities"
+	}
+]
