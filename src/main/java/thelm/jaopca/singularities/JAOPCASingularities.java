@@ -1,10 +1,6 @@
 package thelm.jaopca.singularities;
 
 import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.Mod.EventHandler;
-import cpw.mods.fml.common.Mod.Instance;
-import cpw.mods.fml.common.ModMetadata;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 
 @Mod(
 		modid = JAOPCASingularities.MOD_ID,

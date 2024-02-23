@@ -1,6 +1,5 @@
 package thelm.jaopca.singularities.compat.avaritia;
 
-import net.minecraft.util.ResourceLocation;
 import thelm.jaopca.singularities.compat.avaritia.recipes.CatalystIngredientRecipeAction;
 import thelm.jaopca.singularities.compat.avaritia.recipes.CompressorRecipeAction;
 import thelm.jaopca.utils.ApiImpl;

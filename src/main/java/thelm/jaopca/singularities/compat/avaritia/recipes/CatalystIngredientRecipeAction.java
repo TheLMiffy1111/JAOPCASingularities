@@ -1,6 +1,5 @@
 package thelm.jaopca.singularities.compat.avaritia.recipes;
 
-import java.util.List;
 import java.util.Objects;
 
 import org.apache.logging.log4j.LogManager;
