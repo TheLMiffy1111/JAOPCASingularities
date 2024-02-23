@@ -1,2 +1,2 @@
 # JAOPCA Singularities - Just A Ore Processing Compatibility Attempt: Singularities
-A mod that aims to add singularities for more ores to avaritia. Based off of AOBD Singularities.
+An addon to JAOPCA that helps add singularities for more materials to Avaritia. Based off of AOBD Singularities.

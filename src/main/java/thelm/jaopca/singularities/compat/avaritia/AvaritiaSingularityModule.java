@@ -15,6 +15,7 @@ import codechicken.lib.util.TransformUtils;
 import morph.avaritia.client.render.item.HaloRenderItem;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.item.EnumRarity;
 import net.minecraft.util.registry.IRegistry;
 import net.minecraftforge.client.event.ModelBakeEvent;
 import net.minecraftforge.common.MinecraftForge;
@@ -22,7 +23,6 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import thelm.jaopca.api.JAOPCAApi;
 import thelm.jaopca.api.config.IDynamicSpecConfig;
 import thelm.jaopca.api.forms.IForm;
 import thelm.jaopca.api.forms.IFormRequest;
@@ -37,11 +37,12 @@ import thelm.jaopca.api.modules.IModule;
 import thelm.jaopca.api.modules.IModuleData;
 import thelm.jaopca.api.modules.JAOPCAModule;
 import thelm.jaopca.items.ItemFormType;
+import thelm.jaopca.singularities.compat.avaritia.items.JAOPCASingularityItem;
 import thelm.jaopca.utils.ApiImpl;
 import thelm.jaopca.utils.MiscHelper;
 
 @JAOPCAModule(modDependencies = "avaritia")
-public class AvaritiaModule implements IModule {
+public class AvaritiaSingularityModule implements IModule {
 
 	public static final Set<String> BLACKLIST = new TreeSet<>(Arrays.asList(
 			"Copper", "Diamond", "ElectrumFlux", "Emerald", "Gold", "Infinity", "Iridium", "Iron", "Lapis",
@@ -49,22 +50,29 @@ public class AvaritiaModule implements IModule {
 
 	private final IForm singularityForm = ApiImpl.INSTANCE.newForm(this, "avaritia_singularity", ItemFormType.INSTANCE).
 			setMaterialTypes(MaterialType.values()).setSecondaryName("singularity").setDefaultMaterialBlacklist(BLACKLIST).
-			setSettings(ItemFormType.INSTANCE.getNewSettings().setItemCreator(JAOPCASingularityItem::new));
+			setSettings(ItemFormType.INSTANCE.getNewSettings().
+					setDisplayRarityFunction(m->EnumRarity.UNCOMMON).
+					setItemCreator(JAOPCASingularityItem::new));
 
 	private Map<IMaterial, IDynamicSpecConfig> configs;
 
-	public AvaritiaModule() {
+	public AvaritiaSingularityModule() {
 		MinecraftForge.EVENT_BUS.register(this);
 	}
 
 	@Override
 	public String getName() {
-		return "avaritia";
+		return "avaritia_singularity";
+	}
+
+	@Override
+	public boolean isPassive() {
+		return true;
 	}
 
 	@Override
 	public Multimap<Integer, String> getModuleDependencies() {
-		ImmutableSetMultimap.Builder builder = ImmutableSetMultimap.builder();
+		ImmutableSetMultimap.Builder<Integer, String> builder = ImmutableSetMultimap.builder();
 		builder.put(0, "block");
 		return builder.build();
 	}
@@ -81,7 +89,6 @@ public class AvaritiaModule implements IModule {
 
 	@Override
 	public void onInit(IModuleData moduleData, FMLInitializationEvent event) {
-		JAOPCAApi api = ApiImpl.INSTANCE;
 		AvaritiaHelper helper = AvaritiaHelper.INSTANCE;
 		IMiscHelper miscHelper = MiscHelper.INSTANCE;
 		IItemFormType itemFormType = ItemFormType.INSTANCE;
@@ -90,15 +97,15 @@ public class AvaritiaModule implements IModule {
 			IItemInfo singularityInfo = itemFormType.getMaterialFormInfo(singularityForm, material);
 
 			IDynamicSpecConfig config = configs.get(material);
-			int inputAmount = config.getDefinedInt("avaritia.inputAmount", 300, "The base amount of blocks required to create one singularity.");
-			boolean addToCatalyst = config.getDefinedBoolean("avaritia.addToCatalyst", true, "Should the singularity be added to the Infinity Catalyst recipe.");
+			int inputAmount = config.getDefinedInt("avaritia_singularity.inputAmount", 300, "The base amount of blocks required to create one singularity.");
+			boolean addToCatalyst = config.getDefinedBoolean("avaritia_singularity.addToCatalyst", true, "Should the singularity be added to the Infinity Catalyst recipe.");
 
 			helper.registerCompressorRecipe(
-					miscHelper.getRecipeKey("avaritia.block_to_singularity", material.getName()),
+					miscHelper.getRecipeKey("avaritia_singularity.block_to_singularity", material.getName()),
 					blockOredict, inputAmount, singularityInfo, 1, false);
 			if(addToCatalyst) {
 				helper.registerCatalystIngredient(
-						miscHelper.getRecipeKey("avaritia.singularity_in_catalyst", material.getName()),
+						miscHelper.getRecipeKey("avaritia_singularity.singularity_in_catalyst", material.getName()),
 						singularityInfo);
 			}
 		}
@@ -106,7 +113,7 @@ public class AvaritiaModule implements IModule {
 
 	@Override
 	public Map<String, String> getLegacyRemaps() {
-		ImmutableMap.Builder builder = ImmutableMap.builder();
+		ImmutableMap.Builder<String, String> builder = ImmutableMap.builder();
 		builder.put("singularity", "avaritia_singularity");
 		return builder.build();
 	}

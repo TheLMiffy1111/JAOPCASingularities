@@ -1,4 +1,4 @@
-package thelm.jaopca.singularities.compat.avaritia;
+package thelm.jaopca.singularities.compat.avaritia.items;
 
 import morph.avaritia.api.IHaloRenderItem;
 import morph.avaritia.init.AvaritiaTextures;
