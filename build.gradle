@@ -97,10 +97,10 @@ dependencies {
 
 	// Dependencies
 	implementation("com.github.LegacyModdingMC.UniMixins:unimixins-all-1.7.10:0.1.16") {transitive = false}
-	modImplementation "curse.maven:jaopca-266936:5126032"
-    modImplementation "curse.maven:avaritia-233785:2519595"
-    modImplementation "curse.maven:wanionlib-253043:2430662"
-    modImplementation "curse.maven:eternal-singularity-253077:2577977"
+	modImplementation "curse.maven:jaopca-266936:5132899"
+	modImplementation "curse.maven:avaritia-233785:2519595"
+	modImplementation "curse.maven:wanionlib-253043:2430662"
+	modImplementation "curse.maven:eternal-singularity-253077:2577977"
 	modImplementation("com.github.GTNewHorizons:CodeChickenLib:1.2.1") {transitive = false}
 	modImplementation("com.github.GTNewHorizons:CodeChickenCore:1.2.1") {transitive = false}
 	modImplementation("com.github.GTNewHorizons:NotEnoughItems:2.5.17-GTNH") {transitive = false}
