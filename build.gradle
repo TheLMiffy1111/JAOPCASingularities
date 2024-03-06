@@ -121,9 +121,9 @@ dependencies {
 
 	// Performance
 	implementation("zone.rong:mixinbooter:9.1") {transitive = false}
-	modImplementation "curse.maven:reid-629017:4949840"
+	modImplementation "curse.maven:reid-629017:5143492"
 	modImplementation "curse.maven:vintagefix-871198:5010926"
-	modImplementation "curse.maven:lolasm-460609:4800875"
+	modImplementation "curse.maven:lolasm-460609:5120166"
 }
 
 def replacements = [
