@@ -1,5 +1,5 @@
 plugins {
-	id "com.crystaelix.loom" version "jitpack-e3412050"
+	id "com.crystaelix.loom" version "jitpack-1ab64651"
 	id "eclipse"
 	id "idea"
 	id "maven-publish"
@@ -66,7 +66,7 @@ def specVersion = "3"
 def vendor = "thelm"
 
 group = "thelm.jaopca.singularities"
-version = "3.0.1.1"
+version = "3.0.1.2"
 
 archivesBaseName = "${modName}-${mcVersion}"
 
@@ -109,7 +109,7 @@ dependencies {
 
 	// Dependencies
 	implementation "curse.maven:wrapup-275153:2486198"
-	modImplementation "curse.maven:jaopca-266936:5126036"
+	modImplementation "curse.maven:jaopca-266936:5229663"
 	modImplementation "codechicken:CodeChickenLib:1.12.2-3.2.3.358:universal"
 	modImplementation("morph.avaritia:Avaritia:1.12.2-3.3.0.37:universal") {transitive = false}
 	modImplementation "curse.maven:wanionlib-253043:4623135"
@@ -122,7 +122,7 @@ dependencies {
 	// Performance
 	implementation("zone.rong:mixinbooter:9.1") {transitive = false}
 	modImplementation "curse.maven:reid-629017:5143492"
-	modImplementation "curse.maven:vintagefix-871198:5010926"
+	modImplementation "curse.maven:vintagefix-871198:5175094"
 	modImplementation "curse.maven:lolasm-460609:5120166"
 }
 
