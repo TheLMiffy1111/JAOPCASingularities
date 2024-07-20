@@ -1,5 +1,5 @@
 plugins {
-	id "com.crystaelix.loom" version "jitpack-6453f0f4"
+	id "com.crystaelix.loom" version "jitpack-ae847f1f"
 	id "eclipse"
 	id "idea"
 	id "maven-publish"
@@ -107,7 +107,7 @@ dependencies {
 	modImplementation "curse.maven:nei-integration-225251:2282522"
 
 	// Testing
-	modImplementation "curse.maven:hbms-nuclear-tech-mod-235439:5436208"
+	modImplementation "curse.maven:hbms-nuclear-tech-mod-235439:5534354"
 
 	// Performance
 	modImplementation "com.github.GTNewHorizons:GTNHLib:0.3.2"
