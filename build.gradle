@@ -1,5 +1,5 @@
 plugins {
-	id "com.crystaelix.loom" version "jitpack-6453f0f4"
+	id "com.crystaelix.loom" version "jitpack-ae847f1f"
 	id "eclipse"
 	id "idea"
 	id "maven-publish"
@@ -109,7 +109,7 @@ dependencies {
 
 	// Dependencies
 	implementation "curse.maven:wrapup-275153:2486198"
-	modImplementation "curse.maven:jaopca-266936:5229663"
+	modImplementation "curse.maven:jaopca-266936:5520331"
 	modImplementation "codechicken:CodeChickenLib:1.12.2-3.2.3.358:universal"
 	modImplementation("morph.avaritia:Avaritia:1.12.2-3.3.0.37:universal") {transitive = false}
 	modImplementation "curse.maven:wanionlib-253043:4623135"
@@ -121,8 +121,8 @@ dependencies {
 
 	// Performance
 	implementation("zone.rong:mixinbooter:9.1") {transitive = false}
-	modImplementation "curse.maven:reid-629017:5272391"
-	modImplementation "curse.maven:vintagefix-871198:5348800"
+	modImplementation "curse.maven:reid-629017:5502915"
+	modImplementation "curse.maven:vintagefix-871198:5536276"
 	modImplementation "curse.maven:lolasm-460609:5257348"
 }
 
