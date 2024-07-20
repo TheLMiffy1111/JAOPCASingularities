@@ -1,5 +1,5 @@
 plugins {
-	id "com.crystaelix.loom" version "jitpack-1ab64651"
+	id "com.crystaelix.loom" version "jitpack-6453f0f4"
 	id "eclipse"
 	id "idea"
 	id "maven-publish"
@@ -117,13 +117,13 @@ dependencies {
 	modImplementation "mezz.jei:jei_1.12.2:4.16.1.1012"
 
 	// Testing
-	modImplementation "curse.maven:abyssalcraft-53686:4856547"
+	modImplementation "curse.maven:abyssalcraft-53686:5330323"
 
 	// Performance
 	implementation("zone.rong:mixinbooter:9.1") {transitive = false}
-	modImplementation "curse.maven:reid-629017:5143492"
-	modImplementation "curse.maven:vintagefix-871198:5175094"
-	modImplementation "curse.maven:lolasm-460609:5120166"
+	modImplementation "curse.maven:reid-629017:5272391"
+	modImplementation "curse.maven:vintagefix-871198:5348800"
+	modImplementation "curse.maven:lolasm-460609:5257348"
 }
 
 def replacements = [
