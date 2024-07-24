@@ -97,7 +97,7 @@ dependencies {
 
 	// Dependencies
 	implementation("com.github.LegacyModdingMC.UniMixins:unimixins-all-1.7.10:0.1.17") {transitive = false}
-	modImplementation "curse.maven:jaopca-266936:5467179"
+	modImplementation "curse.maven:jaopca-266936:5560137"
 	modImplementation "curse.maven:avaritia-233785:2519595"
 	modImplementation "curse.maven:wanionlib-253043:2430662"
 	modImplementation "curse.maven:eternal-singularity-253077:2577977"
@@ -125,7 +125,7 @@ blossom {
 
 processResources {
 	inputs.properties(replacements)
-	filesMatching(["mcmod.info", "META-INF/mods.toml"]) {
+	filesMatching(["mcmod.info", "META-INF/mods.toml", "META-INF/neoforge.mods.toml"]) {
 		filter {
 			it.replace(replacements)
 		}
