@@ -109,7 +109,7 @@ dependencies {
 
 	// Dependencies
 	implementation "curse.maven:wrapup-275153:2486198"
-	modImplementation "curse.maven:jaopca-266936:5520331"
+	modImplementation "curse.maven:jaopca-266936:5560140"
 	modImplementation "codechicken:CodeChickenLib:1.12.2-3.2.3.358:universal"
 	modImplementation("morph.avaritia:Avaritia:1.12.2-3.3.0.37:universal") {transitive = false}
 	modImplementation "curse.maven:wanionlib-253043:4623135"
@@ -136,7 +136,7 @@ blossom {
 
 processResources {
 	inputs.properties(replacements)
-	filesMatching(["mcmod.info", "META-INF/mods.toml"]) {
+	filesMatching(["mcmod.info", "META-INF/mods.toml", "META-INF/neoforge.mods.toml"]) {
 		filter {
 			it.replace(replacements)
 		}
