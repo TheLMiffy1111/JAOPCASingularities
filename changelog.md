@@ -1,1 +1,1 @@
-Rebuild against latest JAOPCA  
+Added Chinese and Japanese language files  

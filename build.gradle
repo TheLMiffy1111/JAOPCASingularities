@@ -55,7 +55,7 @@ def specVersion = "W"
 def vendor = "thelm"
 
 group = "thelm.jaopca.singularities"
-version = "W.0.1.3"
+version = "W.0.1.4"
 
 archivesBaseName = "${modName}-${mcVersion}"
 
@@ -97,7 +97,7 @@ dependencies {
 
 	// Dependencies
 	implementation("com.github.LegacyModdingMC.UniMixins:unimixins-all-1.7.10:0.1.17") {transitive = false}
-	modImplementation "curse.maven:jaopca-266936:5560137"
+	modImplementation "curse.maven:jaopca-266936:5601290"
 	modImplementation "curse.maven:avaritia-233785:2519595"
 	modImplementation "curse.maven:wanionlib-253043:2430662"
 	modImplementation "curse.maven:eternal-singularity-253077:2577977"
