@@ -1,10 +1,10 @@
 plugins {
-	id "com.crystaelix.loom" version "jitpack-af214fdb"
+	id "com.crystaelix.loom" version "jitpack-6cccf24f"
 	id "eclipse"
 	id "idea"
 	id "maven-publish"
 	id "net.kyori.blossom" version "[1,2)"
-	id "me.modmuss50.mod-publish-plugin" version "0.5.0"
+	id "me.modmuss50.mod-publish-plugin" version "0.7.2"
 }
 
 repositories {
@@ -120,7 +120,7 @@ dependencies {
 	modImplementation "curse.maven:abyssalcraft-53686:5330323"
 
 	// Performance
-	implementation("zone.rong:mixinbooter:9.1") {transitive = false}
+	implementation("zone.rong:mixinbooter:9.3") {transitive = false}
 	modImplementation "curse.maven:reid-629017:5502915"
 	modImplementation "curse.maven:vintagefix-871198:5536276"
 	modImplementation "curse.maven:lolasm-460609:5257348"
