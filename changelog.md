@@ -1,1 +1,1 @@
-Added Chinese and Japanese language files  
+Optimized images with oxipng  
