@@ -1,16 +1,27 @@
 plugins {
-	id "com.crystaelix.loom" version "jitpack-ca3766c3"
+	id "com.crystaelix.loom" version "1.9.0"
 	id "eclipse"
 	id "idea"
 	id "maven-publish"
 	id "net.kyori.blossom" version "[1,2)"
-	id "me.modmuss50.mod-publish-plugin" version "0.7.4"
+	id "me.modmuss50.mod-publish-plugin" version "0.8.4"
 }
 
 repositories {
 	mavenCentral()
 	flatDir {
 		dirs "libs"
+	}
+	exclusiveContent {
+		forRepository {
+			maven {
+				url = "https://maven.crystaelix.com/releases/"
+			}
+		}
+		filter {
+			includeGroup "thelm.jaopca"
+			includeGroup "thelm.wrapup"
+		}
 	}
 	exclusiveContent {
 		forRepository {
@@ -108,8 +119,8 @@ dependencies {
 	legacyForge "net.minecraftforge:forge:1.12.2-14.23.5.2860"
 
 	// Dependencies
-	implementation "curse.maven:wrapup-275153:2486198"
-	modImplementation "curse.maven:jaopca-266936:6283657"
+	implementation "thelm.wrapup:WrapUp-1.12.2:1.1.3"
+	modImplementation "thelm.jaopca:JAOPCA-1.12.2:2.3.12.31"
 	modImplementation "codechicken:CodeChickenLib:1.12.2-3.2.3.358:universal"
 	modImplementation("morph.avaritia:Avaritia:1.12.2-3.3.0.37:universal") {transitive = false}
 	modImplementation "curse.maven:wanionlib-253043:4623135"
@@ -160,13 +171,31 @@ sourcesJar {
 	manifest.attributes(manifestAttributes)
 }
 
+publishing {
+	publications {
+		register("mavenJava", MavenPublication) {
+			artifact remapJar
+			artifact sourcesJar
+		}
+	}
+	repositories {
+		if(project.hasProperty("CrystaelixMavenUsername") && project.hasProperty("CrystaelixMavenPassword")) {
+			maven {
+				name = "CrystaelixMaven"
+				url = "https://maven.crystaelix.com/releases/"
+				credentials(PasswordCredentials)
+			}
+		}
+	}
+}
+
 publishMods {
 	file = remapJar.archiveFile
 	version = displayName = "${mcVersion}-${project.version}"
 	changelog = file("changelog.md").text
 	type = BETA
 	modLoaders.add("forge")
-	additionalFiles.from(remapSourcesJar.archiveFile)
+	additionalFiles.from(sourcesJar.archiveFile)
 
 	curseforge {
 		accessToken = providers.gradleProperty("curseforge.token")
