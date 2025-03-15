@@ -1,16 +1,26 @@
 plugins {
-	id "com.crystaelix.loom" version "jitpack-ca3766c3"
+	id "com.crystaelix.loom" version "1.9.0"
 	id "eclipse"
 	id "idea"
 	id "maven-publish"
 	id "net.kyori.blossom" version "[1,2)"
-	id "me.modmuss50.mod-publish-plugin" version "0.7.4"
+	id "me.modmuss50.mod-publish-plugin" version "0.8.4"
 }
 
 repositories {
 	mavenCentral()
 	flatDir {
 		dirs "libs"
+	}
+	exclusiveContent {
+		forRepository {
+			maven {
+				url = "https://maven.crystaelix.com/releases/"
+			}
+		}
+		filter {
+			includeGroup "thelm.jaopca"
+		}
 	}
 	exclusiveContent {
 		forRepository {
@@ -97,7 +107,7 @@ dependencies {
 
 	// Dependencies
 	implementation("com.github.LegacyModdingMC.UniMixins:unimixins-all-1.7.10:0.1.19") {transitive = false}
-	modImplementation "curse.maven:jaopca-266936:6283641"
+	modImplementation "thelm.jaopca:JAOPCA-1.7.10:W.0.6.28"
 	modImplementation "curse.maven:avaritia-233785:2519595"
 	modImplementation "curse.maven:wanionlib-253043:2430662"
 	modImplementation "curse.maven:eternal-singularity-253077:2577977"
@@ -149,13 +159,31 @@ sourcesJar {
 	manifest.attributes(manifestAttributes)
 }
 
+publishing {
+	publications {
+		register("mavenJava", MavenPublication) {
+			artifact remapJar
+			artifact sourcesJar
+		}
+	}
+	repositories {
+		if(project.hasProperty("CrystaelixMavenUsername") && project.hasProperty("CrystaelixMavenPassword")) {
+			maven {
+				name = "CrystaelixMaven"
+				url = "https://maven.crystaelix.com/releases/"
+				credentials(PasswordCredentials)
+			}
+		}
+	}
+}
+
 publishMods {
 	file = remapJar.archiveFile
 	version = displayName = "${mcVersion}-${project.version}"
 	changelog = file("changelog.md").text
 	type = ALPHA
 	modLoaders.add("forge")
-	additionalFiles.from(remapSourcesJar.archiveFile)
+	additionalFiles.from(sourcesJar.archiveFile)
 
 	curseforge {
 		accessToken = providers.gradleProperty("curseforge.token")
