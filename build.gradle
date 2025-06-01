@@ -124,7 +124,7 @@ dependencies {
 
 	// Dependencies
 	implementation "thelm.wrapup:WrapUp-1.12.2:1.1.3"
-	modImplementation "thelm.jaopca:JAOPCA-1.12.2:2.3.12.32"
+	modImplementation "thelm.jaopca:JAOPCA-1.12.2:2.3.13.34"
 	modImplementation "codechicken:CodeChickenLib:1.12.2-3.2.3.358:universal"
 	modImplementation("morph.avaritia:Avaritia:1.12.2-3.3.0.37:universal") {transitive = false}
 	modImplementation "curse.maven:wanionlib-253043:4623135"
