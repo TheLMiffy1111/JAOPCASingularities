@@ -4,7 +4,7 @@ plugins {
 	id "idea"
 	id "maven-publish"
 	id "com.crystaelix.blossom" version "1.3.2"
-	id "me.modmuss50.mod-publish-plugin" version "0.8.4"
+	id "me.modmuss50.mod-publish-plugin" version "1.0.0"
 }
 
 repositories {
@@ -133,11 +133,11 @@ dependencies {
 	modImplementation "mezz.jei:jei_1.12.2:4.16.1.1013"
 
 	// Testing
-	modImplementation "curse.maven:abyssalcraft-53686:5330323"
+	modImplementation "curse.maven:abyssalcraft-53686:6922627"
 
 	// Performance
-	implementation("zone.rong:mixinbooter:10.6") {transitive = false}
-	modImplementation "curse.maven:reid-629017:6292779"
+	implementation("zone.rong:mixinbooter:10.7") {transitive = false}
+	modImplementation "curse.maven:reid-629017:6761278"
 	modImplementation "curse.maven:vintagefix-871198:6609247"
 	modImplementation "curse.maven:lolasm-460609:6333774"
 }
