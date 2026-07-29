@@ -5,7 +5,7 @@ plugins {
 	id "idea"
 	id "maven-publish"
 	id "com.crystaelix.blossom" version "1.3.2"
-	id "me.modmuss50.mod-publish-plugin" version "1.1.0"
+	id "me.modmuss50.mod-publish-plugin" version "2.1.1"
 }
 
 repositories {
@@ -123,22 +123,22 @@ dependencies {
 	legacyForge "net.minecraftforge:forge:1.7.10-10.13.4.1614-1.7.10:universal"
 
 	// Dependencies
-	implementation("com.github.LegacyModdingMC.UniMixins:unimixins-all-1.7.10:0.2.1") {transitive = false}
+	implementation("com.github.LegacyModdingMC.UniMixins:unimixins-all-1.7.10:0.3.1") {transitive = false}
 	modImplementation "thelm.jaopca:JAOPCA-1.7.10:W.0.8.31"
 	modImplementation "curse.maven:avaritia-233785:2519595"
 	modImplementation "curse.maven:wanionlib-253043:2430662"
 	modImplementation "curse.maven:eternal-singularity-253077:2577977"
-	modImplementation("com.github.GTNewHorizons:CodeChickenCore:1.4.12") {transitive = false}
-	modImplementation("com.github.GTNewHorizons:NotEnoughItems:2.8.91-GTNH") {transitive = false}
+	modImplementation("com.github.GTNewHorizons:CodeChickenCore:1.4.16") {transitive = false}
+	modImplementation("com.github.GTNewHorizons:NotEnoughItems:2.8.111-GTNH") {transitive = false}
 	modImplementation "curse.maven:nei-integration-225251:2282522"
 
 	// Testing
-	modImplementation "curse.maven:hbms-nuclear-tech-mod-235439:7680246"
+	modImplementation "curse.maven:hbms-nuclear-tech-mod-235439:8048097"
 
 	// Performance
-	modImplementation("com.github.GTNewHorizons:GTNHLib:0.9.52") {transitive = false}
-	modImplementation("com.github.GTNewHorizons:NotEnoughIds:2.1.10") {transitive = false}
-	modImplementation "curse.maven:archaicfix-677782:7700823"
+	modImplementation("com.github.GTNewHorizons:GTNHLib:0.11.23") {transitive = false}
+	modImplementation("com.github.GTNewHorizons:NotEnoughIds:2.1.11") {transitive = false}
+	modImplementation "curse.maven:archaicfix-677782:8125364"
 }
 
 def replacements = [
@@ -206,6 +206,8 @@ publishMods {
 		accessToken = providers.gradleProperty("curseforge.token")
 		projectId = "268610"
 		minecraftVersions.add(mcVersion)
+		client = true
+		server = true
 		requires "jaopca", "avaritia"
 		optional "eternal-singularity"
 	}
